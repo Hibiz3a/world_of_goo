@@ -34,14 +34,17 @@ public class GooManager : MonoBehaviour
         }
     }
 
-    public void SetGooJoint(GameObject _gameObject)
+    public void SetGooJoint(GameObject _gameObject, SpringJoint2D _jointUse)
     {
-        if (Goo1 == null && Goo2 == null)
+        List<GameObject> _goo = new List<GameObject>();
+        _goo.Add(_gameObject);
+
+        if (Goo1 == null)
         {
             Goo1 = Goo[_gameObject.name];
             Debug.Log(Goo1.transform.position);
         }
-        else if (Goo1 != null && Goo2 == null)
+        else if (_gameObject != _goo[0] && Goo2 == null)
         {
             Goo2 = Goo[_gameObject.name];
             Debug.Log(Goo2.transform.position);
@@ -49,8 +52,10 @@ public class GooManager : MonoBehaviour
 
         if (Goo1 != null && Goo2 != null)
         {
-            Goo1.GetComponent<SpringJoint2D>().connectedBody = Goo2.GetComponent<Rigidbody2D>();
-            Goo1.GetComponent<SpringJoint2D>().connectedAnchor = Goo2.transform.localPosition;
+            _jointUse.connectedBody = Goo2.GetComponent<Rigidbody2D>();
+            _jointUse.connectedAnchor = Vector2.zero;
+            _goo.Clear();
+            Goo1.GetComponent<LineRenderer>().SetPosition(1, Goo2.transform.position);
             Goo1 = null;
             Goo2 = null;
         }
