@@ -25,17 +25,33 @@ public class GooManager : MonoBehaviour
 
     private void Start()
     {
-        WaterGooCountCurrent = WaterGooCount;
-        ElectricGooCountCurrent = ElectricGooCount;
-        ConstructionGooCountCurrent = ConstructionGooCount;
         ElectricGoo.text = ElectricGooCountCurrent + "/" + ElectricGooCount;
         ConstructionGoo.text = ConstructionGooCountCurrent + "/" + ConstructionGooCount;
         WaterGoo.text = WaterGooCountCurrent + "/" + WaterGooCount;
     }
 
-    private void Update()
+
+    public void ConstructionLevelLaunch()
     {
+        ConstructionGooCountCurrent = ConstructionGooCount;
+        WaterGooCountCurrent = 0;
+        ElectricGooCountCurrent = 0;
     }
+
+    public void WaterLevelLaunch()
+    {
+        ConstructionGooCountCurrent = 0;
+        WaterGooCountCurrent = WaterGooCount;
+        ElectricGooCountCurrent = 0;
+    }
+
+    public void ElectricGooLaunch()
+    {
+        ConstructionGooCountCurrent = 0;
+        WaterGooCountCurrent = 0;
+        ElectricGooCountCurrent = ElectricGooCount;
+    }
+
 
     public void WaterGooSpawn(InputAction.CallbackContext _context)
     {
