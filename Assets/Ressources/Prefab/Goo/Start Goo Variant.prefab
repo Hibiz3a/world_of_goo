@@ -53,12 +53,28 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3206547935183961653, guid: 7fa5de69cee4f8243a2facb7763e388a, type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3206547935183961653, guid: 7fa5de69cee4f8243a2facb7763e388a, type: 3}
       propertyPath: m_Constraints
-      value: 4
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3206547935183961653, guid: 7fa5de69cee4f8243a2facb7763e388a, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6141940328454821143, guid: 7fa5de69cee4f8243a2facb7763e388a, type: 3}
       propertyPath: m_Name
       value: Start Goo Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6997346264909984382, guid: 7fa5de69cee4f8243a2facb7763e388a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562329091818751552, guid: 7fa5de69cee4f8243a2facb7763e388a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8373713543342215462, guid: 7fa5de69cee4f8243a2facb7763e388a, type: 3}
       propertyPath: m_Color.b
@@ -71,6 +87,10 @@ PrefabInstance:
     - target: {fileID: 8373713543342215462, guid: 7fa5de69cee4f8243a2facb7763e388a, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8668346724291185189, guid: 7fa5de69cee4f8243a2facb7763e388a, type: 3}
+      propertyPath: GooType
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8668346724291185189, guid: 7fa5de69cee4f8243a2facb7763e388a, type: 3}
       propertyPath: isGooStart

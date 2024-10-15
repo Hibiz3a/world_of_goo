@@ -49,6 +49,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4722529430218539121, guid: 391db8c16b908c94a81125c17818403b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722529430218539121, guid: 391db8c16b908c94a81125c17818403b, type: 3}
       propertyPath: m_ConnectedAnchor.x
       value: -5.34
       objectReference: {fileID: 0}
@@ -63,6 +67,10 @@ PrefabInstance:
     - target: {fileID: 5215326808423609423, guid: 391db8c16b908c94a81125c17818403b, type: 3}
       propertyPath: m_ConnectedAnchor.y
       value: -2.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 5852188194748533780, guid: 391db8c16b908c94a81125c17818403b, type: 3}
+      propertyPath: GooType
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5852188194748533780, guid: 391db8c16b908c94a81125c17818403b, type: 3}
       propertyPath: isGooEnd
@@ -88,8 +96,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: End Goo Variant
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5215326808423609423, guid: 391db8c16b908c94a81125c17818403b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8955284081906979622, guid: 391db8c16b908c94a81125c17818403b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7104470914198852338}
   m_SourcePrefab: {fileID: 100100000, guid: 391db8c16b908c94a81125c17818403b, type: 3}
+--- !u!1 &723374870210756725 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8955284081906979622, guid: 391db8c16b908c94a81125c17818403b, type: 3}
+  m_PrefabInstance: {fileID: 8524890715100926803}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-7104470914198852338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723374870210756725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ec32c4fc9222a4699a1bd8b87036cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GooLevelType: 0
