@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef89d893-6070-430b-b0c7-ce4fb3db81ae" name="Changes" comment="" />
+    <list default="true" id="ef89d893-6070-430b-b0c7-ce4fb3db81ae" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.world_of_goo/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.world_of_goo/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/BaseGoo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BaseGoo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Base_Game/Base_Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Base_Game/Base_Scene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Goo/Attachment/Attach_Goo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Goo/Attachment/Attach_Goo.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,6 +55,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.sourceCode.C#",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -87,10 +93,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="7336">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="7336" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -111,6 +117,7 @@
       <workItem from="1728649057509" duration="6534000" />
       <workItem from="1728906078329" duration="8575000" />
       <workItem from="1728992023088" duration="12359000" />
+      <workItem from="1729090224646" duration="1730000" />
     </task>
     <servers />
   </component>

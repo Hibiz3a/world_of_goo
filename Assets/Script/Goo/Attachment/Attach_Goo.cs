@@ -36,6 +36,7 @@ public class Attach_Goo : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        Debug.Log("click attach Goo");
         if (CompareTag("Goo"))
         {
             if (selectedGoo1 == null)
