@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ef89d893-6070-430b-b0c7-ce4fb3db81ae" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.world_of_goo/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.world_of_goo/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/EndLevelPanel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/EndLevelPanel.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/GameManager/Level_Manger.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/GameManager/Level_Manger.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
-    </list>
+    <list default="true" id="ef89d893-6070-430b-b0c7-ce4fb3db81ae" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -117,7 +110,7 @@
       <workItem from="1728561288047" duration="11076000" />
       <workItem from="1728649057509" duration="6534000" />
       <workItem from="1728906078329" duration="8575000" />
-      <workItem from="1728992023088" duration="12105000" />
+      <workItem from="1728992023088" duration="12359000" />
     </task>
     <servers />
   </component>
