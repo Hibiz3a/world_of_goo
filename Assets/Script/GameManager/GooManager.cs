@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using TMPro;
 using UnityEngine;
@@ -5,12 +6,12 @@ using UnityEngine.InputSystem;
 
 public class GooManager : MonoBehaviour
 {
-    private int WaterGooCount = 5;
-    private int ElectricGooCount = 5;
-    private int ConstructionGooCount = 5;
-    private int WaterGooCountCurrent;
-    private int ElectricGooCountCurrent;
-    private int ConstructionGooCountCurrent;
+    [SerializeField] private int WaterGooCount = 5;
+    [SerializeField] private int ElectricGooCount = 5;
+    [SerializeField] private int ConstructionGooCount = 5;
+    [SerializeField] private int WaterGooCountCurrent;
+    [SerializeField] private int ElectricGooCountCurrent;
+    [SerializeField] private int ConstructionGooCountCurrent;
 
     [SerializeField] private GameObject WaterGooGO;
     [SerializeField] private GameObject ElecticGooGO;
@@ -21,6 +22,14 @@ public class GooManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ConstructionGoo;
 
 
+    private List<GameObject> PlacedGoos = new List<GameObject>();
+
+    public List<GameObject> _PlacedGoos
+    {
+        get => PlacedGoos;
+        set => PlacedGoos = value;
+    }
+
     public int _WaterGooCount
     {
         get { return WaterGooCount; }
@@ -29,14 +38,14 @@ public class GooManager : MonoBehaviour
 
     public int _ElectricGooCount
     {
-        get { return ElectricGooCount; }
-        set { ElectricGooCount = value; }
+        get => ElectricGooCount;
+        set => ElectricGooCount = value;
     }
 
     public int _ConstructionGooCount
     {
-        get { return ConstructionGooCount; }
-        set { ConstructionGooCount = value; }
+        get => ConstructionGooCount;
+        set => ConstructionGooCount = value;
     }
 
     public int _CurrentWaterGooCount
@@ -59,6 +68,7 @@ public class GooManager : MonoBehaviour
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         ElectricGoo.text = ElectricGooCountCurrent + "/" + ElectricGooCount;
         ConstructionGoo.text = ConstructionGooCountCurrent + "/" + ConstructionGooCount;
         WaterGoo.text = WaterGooCountCurrent + "/" + WaterGooCount;
@@ -92,7 +102,8 @@ public class GooManager : MonoBehaviour
         if (WaterGooCountCurrent > 0 && _context.started)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Instantiate(WaterGooGO, mousePos, Quaternion.Euler(0, 0, 0), gameObject.transform);
+            GameObject _waterGoo = Instantiate(WaterGooGO, mousePos, Quaternion.Euler(0, 0, 0), gameObject.transform);
+            PlacedGoos.Add(_waterGoo);
             WaterGooCountCurrent--;
             WaterGoo.text = WaterGooCountCurrent + "/" + WaterGooCount;
         }
@@ -103,7 +114,8 @@ public class GooManager : MonoBehaviour
         if (ElectricGooCountCurrent > 0 && _context.started)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Instantiate(ElecticGooGO, mousePos, Quaternion.Euler(0, 0, 0), gameObject.transform);
+            GameObject _electricGoo = Instantiate(ElecticGooGO, mousePos, Quaternion.Euler(0, 0, 0), gameObject.transform);
+            PlacedGoos.Add(_electricGoo);
             ElectricGooCountCurrent--;
             ElectricGoo.text = ElectricGooCountCurrent + "/" + ElectricGooCount;
         }
@@ -114,7 +126,8 @@ public class GooManager : MonoBehaviour
         if (ConstructionGooCountCurrent > 0 && _context.started)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Instantiate(ConstructionGooGO, mousePos, Quaternion.Euler(0, 0, 0), gameObject.transform);
+            GameObject _constructionGoo = Instantiate(ConstructionGooGO, mousePos, Quaternion.Euler(0, 0, 0), gameObject.transform);
+            PlacedGoos.Add(_constructionGoo);
             ConstructionGooCountCurrent--;
             ConstructionGoo.text = ConstructionGooCountCurrent + "/" + ConstructionGooCount;
         }

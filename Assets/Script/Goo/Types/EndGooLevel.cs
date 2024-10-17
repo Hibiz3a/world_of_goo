@@ -1,6 +1,3 @@
-using System;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EndGooLevel : MonoBehaviour
@@ -16,13 +13,13 @@ public class EndGooLevel : MonoBehaviour
         get { return PanelEndLevel; }
         set { PanelEndLevel = value; }
     }
-
+    
 
     private void Start()
     {
         SpringJoint = gameObject.GetComponent<SpringJoint2D>();
         levelManager = gameObject.transform.parent.GetComponent<Level_Manger>();
-        GooLevelType = levelManager._LevelGooMapping[levelManager._CurrentLevelType];
+        GooLevelType = levelManager._CurrentGooType;
     }
 
     private void Update()
@@ -41,37 +38,44 @@ public class EndGooLevel : MonoBehaviour
             switch (GooLevelType)
             {
                 case GooType.Construction:
-                    levelManager._GooManager._ConstructionGooCount = CalculateGooEarned(
+                    int _earnedGooConstruction = CalculateGooEarned(
                         levelManager._GooManager._ConstructionGooCount,
                         levelManager._GooManager._CurrentConstructionGooCount, levelManager._CurrentLevelType);
+                    levelManager._GooManager._ConstructionGooCount += _earnedGooConstruction;
                     PanelEndLevel.GetComponent<CanvasGroup>().alpha = 1;
+                    PanelEndLevel.GetComponent<EndLevelPanel>()._FirstGain.gameObject.SetActive(true);
                     PanelEndLevel.GetComponent<EndLevelPanel>()._FirstGain.text = "You have earned " +
-                        levelManager._GooManager._ConstructionGooCount + " construction Goo.";
-                        levelManager.EndLevel();
+                        _earnedGooConstruction + " construction Goo.";
+                    _earnedGooConstruction = 0;
+                    levelManager.EndLevelWin();
                     break;
                 case GooType.Electric:
-                    levelManager._GooManager._ElectricGooCount = CalculateGooEarned(
+                    int _earnedGooElectric = CalculateGooEarned(
                         levelManager._GooManager._ElectricGooCount,
                         levelManager._GooManager._CurrentElectricGooCount, levelManager._CurrentLevelType);
+                    levelManager._GooManager._ElectricGooCount += _earnedGooElectric;
                     PanelEndLevel.GetComponent<CanvasGroup>().alpha = 1;
+                    PanelEndLevel.GetComponent<EndLevelPanel>()._SecondGain.gameObject.SetActive(true);
                     PanelEndLevel.GetComponent<EndLevelPanel>()._SecondGain.text = "You have earned " +
-                        levelManager._GooManager._ElectricGooCount + " electric Goo.";
-                    levelManager.EndLevel();
+                        _earnedGooElectric + " electric Goo.";
+                    _earnedGooElectric = 0;
+                    levelManager.EndLevelWin();
                     break;
                 case GooType.Water:
-                    levelManager._GooManager._WaterGooCount = CalculateGooEarned(
+                    int _earnedGooWater = CalculateGooEarned(
                         levelManager._GooManager._WaterGooCount,
                         levelManager._GooManager._CurrentWaterGooCount, levelManager._CurrentLevelType);
+                    levelManager._GooManager._WaterGooCount += _earnedGooWater;
                     PanelEndLevel.GetComponent<CanvasGroup>().alpha = 1;
+                    PanelEndLevel.GetComponent<EndLevelPanel>()._ThirdGain.gameObject.SetActive(true);
                     PanelEndLevel.GetComponent<EndLevelPanel>()._ThirdGain.text = "You have earned " +
-                        levelManager._GooManager._WaterGooCount + " water Goo.";
-                    levelManager.EndLevel();
+                        _earnedGooWater + " water Goo.";
+                    _earnedGooWater = 0;
+                    levelManager.EndLevelWin();
                     break;
             }
         }
     }
-
-
 
 
     private int CalculateGooEarned(int _baseGooCount, int _currentGooStock, LevelType _levelType)
@@ -86,7 +90,7 @@ public class EndGooLevel : MonoBehaviour
                 }
                 else
                 {
-                    _earnedGoo = (_baseGooCount / 1) * 1;
+                    _earnedGoo = 1;
                 }
 
                 break;
@@ -97,8 +101,9 @@ public class EndGooLevel : MonoBehaviour
                 }
                 else
                 {
-                    _earnedGoo = (_baseGooCount / 1) * 2;
+                    _earnedGoo = 2;
                 }
+
                 break;
             case LevelType.Hard:
                 if (_currentGooStock > 0)
@@ -107,8 +112,9 @@ public class EndGooLevel : MonoBehaviour
                 }
                 else
                 {
-                    _earnedGoo = (_baseGooCount / 1) * 3;
+                    _earnedGoo = 3;
                 }
+
                 break;
         }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -199,6 +200,20 @@ public class Attach_Goo : MonoBehaviour, IPointerClickHandler
         RbConnected.Add(goo2.gameObject);
         LinePreafabList.Add(_line);
     }
+
+    private void OnDestroy()
+    {
+        // Clear the lists for line renderers and connected rigidbodies
+        LinePreafabList.Clear();
+        RbConnected.Clear();
+
+        // Destroy all child objects attached to the Goo
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
 
     private void Update()
     {

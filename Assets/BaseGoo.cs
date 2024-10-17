@@ -1,20 +1,11 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System.Collections.Generic;
-
 
 public class BaseGoo : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private GameObject PanelLevel;
-
-    private void Start()
-    {
-        Debug.Log("click");
-    }
-
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("click");
         if (CompareTag("Base"))
         {
             PanelLevel.SetActive(true);
@@ -26,4 +17,12 @@ public class BaseGoo : MonoBehaviour, IPointerClickHandler
             PanelLevel.SetActive(false);
         }
     }
+}
+
+public enum Level
+{
+    Level1,
+    Level2,
+    Level3,
+    Level4
 }

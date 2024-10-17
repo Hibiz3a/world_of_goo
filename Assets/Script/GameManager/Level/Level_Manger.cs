@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class Level_Manger : MonoBehaviour
 {
     [SerializeField] private LevelType CurrentLevelType;
     [SerializeField] private GooType CurrentGooType;
+
     [SerializeField] private GooManager GooManager;
     [SerializeField] private GameObject StartGoo;
     [SerializeField] private GameObject EndGoo;
@@ -15,38 +17,39 @@ public class Level_Manger : MonoBehaviour
     [SerializeField] private Vector3 SecondEncorStarGoo;
     [SerializeField] private Vector3 FirstEncorEndGoo;
     [SerializeField] private Vector3 SecondEncorEndGoo;
+
     [SerializeField] private int AmountOfSartGoo = 2;
+    [SerializeField] private int baseObstacleCount = 3;
 
-    [SerializeField] private GameObject PanelEndLevel;
+    [SerializeField] private GameObject PanelEndLevelWin;
+    [SerializeField] private GameObject PanelEndLevelLoose;
     [SerializeField] private GameObject Canva;
+    [SerializeField] private GameObject ObstaclePrefab;
 
-    private Dictionary<LevelType, GooType> LevelGooMapping;
+    private List<GameObject> Goos = new List<GameObject>();
+    private List<GameObject> Obstacles = new List<GameObject>();
 
-    public GooManager _GooManager
-    {
-        get { return GooManager; }
-    }
 
-    public Dictionary<LevelType, GooType> _LevelGooMapping
-    {
-        get { return LevelGooMapping; }
-    }
+    public GooType _CurrentGooType => CurrentGooType;
+    public GooManager _GooManager => GooManager;
 
-    public LevelType _CurrentLevelType
-    {
-        get { return CurrentLevelType; }
-    }
+    public LevelType _CurrentLevelType => CurrentLevelType;
 
     private void Start()
     {
-        LevelGooMapping = new Dictionary<LevelType, GooType>
-        {
-            { LevelType.Easy, GooType.Construction },
-            { LevelType.Medium, GooType.Water },
-            { LevelType.Hard, GooType.Electric }
-        };
+        LoadGooForLevelAndType(CurrentLevelType, CurrentGooType);
+    }
 
-        LoadGooForLevel(CurrentLevelType);
+    public void SetLevelType(LevelType levelType)
+    {
+        CurrentLevelType = levelType;
+        Debug.Log("Level Type Set to: " + levelType);
+    }
+
+    public void SetGooType(GooType gooType)
+    {
+        CurrentGooType = gooType;
+        Debug.Log("Goo Type Set to: " + gooType);
     }
 
     private void SpawnStartGoo()
@@ -63,7 +66,9 @@ public class Level_Manger : MonoBehaviour
         {
             for (int i = 0; i < _posGoo.Count; i++)
             {
-                Instantiate(StartGoo, _posGoo[i], Quaternion.Euler(0, 0, 0), GooManager.transform);
+                GameObject _startGoo =
+                    Instantiate(StartGoo, _posGoo[i], Quaternion.Euler(0, 0, 0), GooManager.transform);
+                Goos.Add(_startGoo);
             }
         }
         else
@@ -72,16 +77,36 @@ public class Level_Manger : MonoBehaviour
         }
     }
 
-    public void EndLevel()
+    public void EndLevelWin()
     {
-        gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        Canva.transform.GetChild(0).gameObject.SetActive(false);
-        for (int i = 0; i < GooManager.transform.childCount + 1; i++)
+        for (int i = 0; i < Goos.Count; i++)
         {
-            GooManager.transform.GetChild(i).gameObject.SetActive(false);
+            Destroy(Goos[i]);
+            Goos.RemoveAt(i);
         }
 
-        
+        Canva.transform.GetChild(0).gameObject.SetActive(false);
+        for (int i = 0; i < GooManager._PlacedGoos.Count; i++)
+        {
+            for (int j = 0; j < GooManager._PlacedGoos[i].transform.childCount; j++)
+            {
+                Destroy(GooManager._PlacedGoos[i].transform.GetChild(j).gameObject);
+            }
+            Destroy(GooManager._PlacedGoos[i]);
+            GooManager._PlacedGoos.RemoveAt(i);
+        }
+
+        for (int i = 0; i < Obstacles.Count; i++)
+        {
+            Destroy(Obstacles[i]);
+            Obstacles.RemoveAt(i);
+        }
+    }
+
+    public void EndLevelLoose()
+    {
+        EndLevelWin();
+        PanelEndLevelLoose.SetActive(true);
     }
 
     private void SpawnEndGoo()
@@ -91,20 +116,63 @@ public class Level_Manger : MonoBehaviour
 
         GameObject _endGoo = Instantiate(EndGoo, posEndGoo, Quaternion.Euler(0, 0, 0), gameObject.transform);
 
-        _endGoo.GetComponent<EndGooLevel>()._PanelEndLevel = PanelEndLevel;
+        _endGoo.GetComponent<EndGooLevel>()._PanelEndLevel = PanelEndLevelWin;
+        Goos.Add(_endGoo);
     }
 
-    private void LoadGooForLevel(LevelType levelType)
+    private void SpawnObstacles(LevelType levelType)
     {
-        if (LevelGooMapping.TryGetValue(levelType, out GooType gooType))
+        int obstacleCount = baseObstacleCount;
+
+        switch (levelType)
         {
-            CurrentGooType = gooType;
-            SpawnGooOfType(CurrentGooType);
+            case LevelType.Easy:
+                obstacleCount = baseObstacleCount;
+                break;
+            case LevelType.Medium:
+                obstacleCount = baseObstacleCount + 3;
+                break;
+            case LevelType.Hard:
+                obstacleCount = baseObstacleCount + 6;
+                break;
         }
-        else
+
+        for (int i = 0; i < obstacleCount; i++)
         {
-            Debug.LogError("This level Type is not define ! ");
+            Vector3 obstaclePosition = new Vector3(Random.Range(FirstEncorStarGoo.x, SecondEncorEndGoo.x),
+                Random.Range(FirstEncorStarGoo.y, SecondEncorEndGoo.y), 0);
+
+            GameObject _obstacle = Instantiate(ObstaclePrefab, obstaclePosition, Quaternion.identity, this.transform);
+            Obstacles.Add(_obstacle);
         }
+    }
+
+    private void AdjustEndPosition(LevelType levelType)
+    {
+        switch (levelType)
+        {
+            case LevelType.Easy:
+                SecondEncorEndGoo += new Vector3(5, 0, 0);
+                break;
+            case LevelType.Medium:
+                SecondEncorEndGoo += new Vector3(10, 0, 0);
+                break;
+            case LevelType.Hard:
+                SecondEncorEndGoo += new Vector3(15, 0, 0);
+                break;
+        }
+    }
+
+    public void LoadGooForLevelAndType(LevelType levelType, GooType gooType)
+    {
+        SetLevelType(levelType);
+        SetGooType(gooType);
+
+        AdjustEndPosition(levelType);
+
+        SpawnObstacles(levelType);
+
+        SpawnGooOfType(CurrentGooType);
     }
 
     private void SpawnGooOfType(GooType gooType)
@@ -115,21 +183,30 @@ public class Level_Manger : MonoBehaviour
                 GooManager.WaterLevelLaunch();
                 SpawnStartGoo();
                 SpawnEndGoo();
-                Debug.Log("Spawning Water Goo...");
                 break;
             case GooType.Construction:
                 GooManager.ConstructionLevelLaunch();
                 SpawnStartGoo();
                 SpawnEndGoo();
-                Debug.Log("Spawning Construction Goo...");
                 break;
             case GooType.Electric:
                 GooManager.ElectricGooLaunch();
                 SpawnStartGoo();
                 SpawnEndGoo();
-                Debug.Log("Spawning Electric Goo...");
+                break;
+            default:
+                Debug.LogError("Unknown Goo Type!");
                 break;
         }
+    }
+
+    public void Restart()
+    {
+        LoadGooForLevelAndType(CurrentLevelType, CurrentGooType);
+    }
+
+    public void Exit()
+    {
     }
 }
 
