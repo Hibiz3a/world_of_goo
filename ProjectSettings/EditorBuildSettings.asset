@@ -8,4 +8,31 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Base_Game/Base_Scene.unity
     guid: 03832b44988df9847b5c5dc86e9e4279
+  - enabled: 1
+    path: Assets/Scenes/Level/Construction_Level_easy.unity
+    guid: 4de9b89a629657949b8d4884c3e831da
+  - enabled: 1
+    path: Assets/Scenes/Level/Construction_Level_Medium.unity
+    guid: cf2d196cadb24484abe3e0f68750eba1
+  - enabled: 1
+    path: Assets/Scenes/Level/Construction_Level_Hard.unity
+    guid: d9f32e37ca4c7ed4fa0ac9592e97a50b
+  - enabled: 1
+    path: Assets/Scenes/Level/Electric_Level_Easy.unity
+    guid: 4d56dc7d28f4c8445a7bd963b5256619
+  - enabled: 1
+    path: Assets/Scenes/Level/Electric_Level_Medium.unity
+    guid: 04cbde73319998644af3013fb1d8d768
+  - enabled: 1
+    path: Assets/Scenes/Level/Electric_Level_Hard.unity
+    guid: ac71b7117a364294e9e48d3abec49969
+  - enabled: 1
+    path: Assets/Scenes/Level/Water_Level_Easy.unity
+    guid: 01d426e64388f244e8abb80671c012a9
+  - enabled: 1
+    path: Assets/Scenes/Level/Water_Level_Medium.unity
+    guid: 1241f6d4d5522bc4a90858585a040f92
+  - enabled: 1
+    path: Assets/Scenes/Level/Water_Level_Hard.unity
+    guid: 20a659f1b7cbb734d88dfa8561ff5fdf
   m_configObjects: {}

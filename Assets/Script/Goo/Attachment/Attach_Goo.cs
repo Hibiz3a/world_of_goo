@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,11 +8,19 @@ public class Attach_Goo : MonoBehaviour, IPointerClickHandler
     [SerializeField] private SpringJoint2D[] springJoints;
     [SerializeField] private GameObject LinePreafab;
     [SerializeField] private bool isGooStart;
+
+
     [SerializeField] private bool isGooEnd;
     [SerializeField] private float connectionRange = 5f;
     private List<GameObject> LinePreafabList = new List<GameObject>();
     private List<GameObject> RbConnected = new List<GameObject>();
 
+
+
+    public bool _IsGooStart => isGooStart;
+    public bool _IsGooEnd => isGooEnd;
+    public List<GameObject> _LinePreafabList => LinePreafabList;
+    public List<GameObject> _RbConnected => RbConnected;
 
     [SerializeField] private GooType GooType;
 
@@ -22,18 +29,15 @@ public class Attach_Goo : MonoBehaviour, IPointerClickHandler
         get { return GooType; }
     }
 
-
     public static Attach_Goo selectedGoo1;
     private Rigidbody2D rb2d;
     private int JointCount = 0;
-
 
     private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         springJoints = GetComponents<SpringJoint2D>();
     }
-
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -61,157 +65,142 @@ public class Attach_Goo : MonoBehaviour, IPointerClickHandler
         }
     }
 
-
     private void CreateSpringJoint(Attach_Goo goo1, Attach_Goo goo2)
-{
-
-    //Bloc The connexion between 2 StartGoo
-    if (goo1.isGooStart && goo2.isGooStart)
     {
-        Debug.Log("Cannot connect two Goo Starts together.");
-        return;
-    }
-    
-
-    float distance = Vector2.Distance(goo1.transform.position, goo2.transform.position);
-
-    //look is the selected Goo is in range
-    if (distance <= connectionRange)
-    {
-        SpringJoint2D availableJoint = null;
-        
-        //EndGoo create automatically a Joint between him and the selected Goo
-        if (goo1.isGooEnd || goo2.isGooEnd)
+        // Block the connection between two Start Goo objects
+        if (goo1.isGooStart && goo2.isGooStart)
         {
-            //If none of Goo is an EndGoo Initiate them  cancel
-            if (!goo1.isGooEnd && !goo2.isGooEnd)
-            {
-                Debug.Log("Connection must be initiated by a Goo End.");
-                return;
-            }
-            
-            foreach (var joint in goo2.springJoints)
-            {
-                if (joint.connectedBody == null)
-                {
-                    availableJoint = joint;
-                    break;
-                }
-            }
-
-            if (availableJoint != null)
-            {
-                CreateLineRenderer(goo2, goo1);
-                availableJoint.connectedBody = goo1.rb2d;
-                availableJoint.autoConfigureConnectedAnchor = false;
-                availableJoint.connectedAnchor = Vector2.zero;
-                goo1.JointCount++;
-            }
+            Debug.Log("Cannot connect two Goo Starts together.");
+            return;
         }
 
-        //If Goo1 is a start or end Goo he can connect him to an Classic goo
-        if (goo1.isGooStart || goo1.isGooEnd)
+        float distance = Vector2.Distance(goo1.transform.position, goo2.transform.position);
+
+        // Check if the selected Goo is in range
+        if (distance <= connectionRange)
         {
-            foreach (var joint in goo2.springJoints)
+            SpringJoint2D availableJoint = null;
+
+            // EndGoo creates a joint automatically with the selected Goo
+            if (goo1.isGooEnd || goo2.isGooEnd)
             {
-                if (joint.connectedBody == null)
+                // If none of the Goos is an EndGoo, cancel the initiation
+                if (!goo1.isGooEnd && !goo2.isGooEnd)
                 {
-                    availableJoint = joint;
-                    break;
+                    Debug.Log("Connection must be initiated by a Goo End.");
+                    return;
+                }
+
+                foreach (var joint in goo2.springJoints)
+                {
+                    if (joint.connectedBody == null)
+                    {
+                        availableJoint = joint;
+                        break;
+                    }
+                }
+
+                if (availableJoint != null)
+                {
+                    CreateLineRenderer(goo1, goo2, availableJoint);
+                    availableJoint.connectedBody = goo1.rb2d;
+                    availableJoint.autoConfigureConnectedAnchor = false;
+                    availableJoint.connectedAnchor = Vector2.zero;
+                    goo1.JointCount++;
                 }
             }
 
-            if (availableJoint != null)
+            // If Goo1 is a Start or End Goo, connect it to a regular Goo
+            if (goo1.isGooStart || goo1.isGooEnd)
             {
-                CreateLineRenderer(goo2, goo1);
-                availableJoint.connectedBody = goo1.rb2d;
-                availableJoint.autoConfigureConnectedAnchor = false;
-                availableJoint.connectedAnchor = Vector2.zero;
-                goo1.JointCount++;
-            }
-        }
-        // Made the same but in other order
-        else if (goo2.isGooStart || goo2.isGooEnd)
-        {
-            foreach (var joint in goo1.springJoints)
-            {
-                if (joint.connectedBody == null)
+                foreach (var joint in goo2.springJoints)
                 {
-                    availableJoint = joint;
-                    break;
+                    if (joint.connectedBody == null)
+                    {
+                        availableJoint = joint;
+                        break;
+                    }
+                }
+
+                if (availableJoint != null)
+                {
+                    CreateLineRenderer(goo1, goo2, availableJoint);
+                    availableJoint.connectedBody = goo1.rb2d;
+                    availableJoint.autoConfigureConnectedAnchor = false;
+                    availableJoint.connectedAnchor = Vector2.zero;
+                    goo1.JointCount++;
+                }
+            }
+            // Same logic but in reverse order
+            else if (goo2.isGooStart || goo2.isGooEnd)
+            {
+                foreach (var joint in goo1.springJoints)
+                {
+                    if (joint.connectedBody == null)
+                    {
+                        availableJoint = joint;
+                        break;
+                    }
+                }
+
+                if (availableJoint != null)
+                {
+                    CreateLineRenderer(goo1, goo2, availableJoint);
+                    availableJoint.connectedBody = goo2.rb2d;
+                    availableJoint.autoConfigureConnectedAnchor = false;
+                    availableJoint.connectedAnchor = Vector2.zero;
+                    goo1.JointCount++;
+                    goo2.JointCount++;
+                }
+            }
+            else
+            {
+                // Both Goo1 and Goo2 are not Start or End Goos
+                foreach (var joint in goo1.springJoints)
+                {
+                    if (joint.connectedBody == null)
+                    {
+                        availableJoint = joint;
+                        break;
+                    }
+                }
+
+                if (availableJoint != null)
+                {
+                    CreateLineRenderer(goo1, goo2, availableJoint);
+                    availableJoint.connectedBody = goo2.rb2d;
+                    availableJoint.autoConfigureConnectedAnchor = false;
+                    availableJoint.connectedAnchor = Vector2.zero;
+                    goo1.JointCount++;
+                    goo2.JointCount++;
                 }
             }
 
-            if (availableJoint != null)
-            {
-                CreateLineRenderer(goo1, goo2);
-                availableJoint.connectedBody = goo2.rb2d;
-                availableJoint.autoConfigureConnectedAnchor = false;
-                availableJoint.connectedAnchor = Vector2.zero;
-                goo1.JointCount++;
-                goo2.JointCount++;
-            }
+            Debug.Log("Connection established between " + goo1.gameObject.name + " and " + goo2.gameObject.name);
         }
         else
         {
-            //Goo1 and Goo2 is not Start or End Goo
-            foreach (var joint in goo1.springJoints)
-            {
-                if (joint.connectedBody == null)
-                {
-                    availableJoint = joint;
-                    break;
-                }
-            }
-
-            if (availableJoint != null)
-            {
-                CreateLineRenderer(goo1, goo2);
-                availableJoint.connectedBody = goo2.rb2d;
-                availableJoint.autoConfigureConnectedAnchor = false;
-                availableJoint.connectedAnchor = Vector2.zero;
-                goo1.JointCount++;
-                goo2.JointCount++;
-            }
+            Debug.Log("Goo's are too far from each other.");
         }
-
-        Debug.Log("Connexion between " + goo1.gameObject.name + " and " + goo2.gameObject.name);
     }
-    else
+
+    private void CreateLineRenderer(Attach_Goo goo1, Attach_Goo goo2, SpringJoint2D springJoint)
     {
-        Debug.Log("Goo's are too far from the other.");
-    }
-}
+        // Create a new GameObject with the LineRenderer component
+        GameObject _line = Instantiate(LinePreafab, goo1.transform.position, Quaternion.identity, goo1.transform);
+        LineRenderer _lineRenderer = _line.GetComponent<LineRenderer>();
 
+        // Set positions of Goo1 and Goo2 for the start and end of the LineRenderer
+        _lineRenderer.SetPosition(0, goo1.transform.position);
+        _lineRenderer.SetPosition(1, goo2.transform.position);
 
+        // Associate the correct SpringJoint with the LineManager
+        LineManager lineManager = _line.GetComponent<LineManager>();
+        lineManager.SetSpringJointToWatch(springJoint);
 
-    private void CreateLineRenderer(Attach_Goo goo1, Attach_Goo goo2)
-    {
-    //Creation of a Game object with de the component LineRenderer
-        GameObject _line = Instantiate(LinePreafab, goo1.transform.position, Quaternion.Euler(0, 0, 0),
-            goo1.transform);
-        LineRenderer _linerender = _line.GetComponent<LineRenderer>();
-
-        //Set the position of Goo1 and Goo2 for the Start and the End of Line Render
-        _linerender.SetPosition(0, goo1.gameObject.transform.position);
-        _linerender.SetPosition(1, goo2.gameObject.transform.position);
-
-        //Add Rigidbody ans LineRenderer to a list
+        // Add the connected Rigidbody and LineRenderer to the lists
         RbConnected.Add(goo2.gameObject);
         LinePreafabList.Add(_line);
-    }
-
-    private void OnDestroy()
-    {
-        // Clear the lists for line renderers and connected rigidbodies
-        LinePreafabList.Clear();
-        RbConnected.Clear();
-
-        // Destroy all child objects attached to the Goo
-        foreach (Transform child in transform)
-        {
-            Destroy(child.gameObject);
-        }
     }
 
 
@@ -219,22 +208,41 @@ public class Attach_Goo : MonoBehaviour, IPointerClickHandler
     {
         if (gameObject.activeSelf)
         {
-            //Actualisation of LineRenderer.
+            // Update the positions of the LineRenderer.
             for (int i = 0; i < LinePreafabList.Count; i++)
             {
-                LinePreafabList[i].GetComponent<LineRenderer>()
-                    .SetPosition(0, LinePreafabList[i].transform.parent.position);
-                LinePreafabList[i].GetComponent<LineRenderer>().SetPosition(1, RbConnected[i].transform.position);
+                if (LinePreafabList[i] != null)
+                {
+                    LinePreafabList[i].GetComponent<LineRenderer>()
+                        .SetPosition(0, LinePreafabList[i].transform.parent.position);
+                    LinePreafabList[i].GetComponent<LineRenderer>().SetPosition(1, RbConnected[i].transform.position);
+                }
             }
 
-            //Detect if Goo as an SpringJoint Rupture.
+            // Detect if a SpringJoint2D is disconnected or disabled and destroy the corresponding LineRenderer.
             for (int i = 0; i < springJoints.Length; i++)
             {
-                if (!springJoints[i].isActiveAndEnabled)
+                // Check if the SpringJoint is disabled or disconnected
+                if (!springJoints[i].enabled || springJoints[i].connectedBody == null)
                 {
-                    Debug.Log("Game Over");
+                    // Only destroy LineRenderer if neither Goo is a Start or End Goo
+                    if (!isGooStart && !isGooEnd)
+                    {
+                        // Find the index of the connected GameObject and destroy the corresponding LineRenderer
+                        int index = RbConnected.FindIndex(rb => rb == springJoints[i].connectedBody?.gameObject);
+
+                        if (index >= 0 && LinePreafabList[index] != null)
+                        {
+                            Destroy(LinePreafabList[index]); // Destroy the LineRenderer
+                            LinePreafabList.RemoveAt(index); // Remove from the list
+                            RbConnected.RemoveAt(index);    // Remove from the connected Rigidbody list
+                        }
+
+                        Debug.Log("SpringJoint disconnected or disabled, LineRenderer destroyed.");
+                    }
                 }
             }
         }
     }
+
 }

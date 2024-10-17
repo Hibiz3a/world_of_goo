@@ -1,16 +1,18 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
-public class LoadScene : MonoBehaviour
+public class LoadScene : MonoBehaviour, IPointerClickHandler
 {
+    [SerializeField] private int sceneIndex;  
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        LoadLevelScene(sceneIndex);  
+    }
+
     public void LoadLevelScene(int _sceneLvl)
     {
-        for (int i = 0; i < SceneManager.sceneCount; i++)
-        {
-            if (i == _sceneLvl)
-            {
-                SceneManager.LoadScene(i);
-            }
-        }
+        SceneManager.LoadScene(_sceneLvl);  
     }
 }

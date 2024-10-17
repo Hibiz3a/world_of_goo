@@ -13,7 +13,7 @@ public class EndGooLevel : MonoBehaviour
         get { return PanelEndLevel; }
         set { PanelEndLevel = value; }
     }
-    
+
 
     private void Start()
     {
@@ -103,7 +103,6 @@ public class EndGooLevel : MonoBehaviour
                 {
                     _earnedGoo = 2;
                 }
-
                 break;
             case LevelType.Hard:
                 if (_currentGooStock > 0)
@@ -114,7 +113,6 @@ public class EndGooLevel : MonoBehaviour
                 {
                     _earnedGoo = 3;
                 }
-
                 break;
         }
 

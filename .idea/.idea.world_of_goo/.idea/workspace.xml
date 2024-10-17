@@ -6,17 +6,24 @@
   <component name="ChangeListManager">
     <list default="true" id="ef89d893-6070-430b-b0c7-ce4fb3db81ae" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.world_of_goo/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.world_of_goo/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/BaseGoo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BaseGoo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CollisionEnd.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CollisionEnd.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GeneratorGoo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GeneratorGoo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LoadScene.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LoadScene.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Ressources/Prefab/Goo/Goo 1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ressources/Prefab/Goo/Goo 1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Ressources/Prefab/Goo/LineRenderer.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ressources/Prefab/Goo/LineRenderer.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Base_Game/Base_Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Base_Game/Base_Scene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Construction_Level.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Construction_Level.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Electric_Level.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Electric_Level.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Water_Level.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Water_Level.unity.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level_Manager/Level_ManagerSetUp.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level_Manager/Level_ManagerSetUp.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/GameManager/GooManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/GameManager/GooManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/GameManager/Level/Level_Manger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/GameManager/Level/Level_Manger.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Goo/Attachment/Attach_Goo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Goo/Attachment/Attach_Goo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Goo/Types/EndGooLevel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Goo/Types/EndGooLevel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Input/world of goo.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Input/world of goo.inputactions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Input/world of goo.inputactions.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Input/world of goo.inputactions.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,10 +105,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="24512">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="24512" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -124,7 +131,9 @@
       <workItem from="1728992023088" duration="12359000" />
       <workItem from="1729090224646" duration="2028000" />
       <workItem from="1729165655072" duration="3453000" />
-      <workItem from="1729169151366" duration="9097000" />
+      <workItem from="1729169151366" duration="9382000" />
+      <workItem from="1729185675910" duration="7324000" />
+      <workItem from="1729194931034" duration="509000" />
     </task>
     <servers />
   </component>
@@ -140,24 +149,5 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Script/Goo/Types/EndGooLevel.cs</url>
-          <line>64</line>
-          <properties documentPath="C:\Users\rayna\Documents\Lahorde\Anne 2\Quete\Quete n°1\world_of_goo\Assets\Script\Goo\Types\EndGooLevel.cs" containingFunctionPresentation="Method 'LookIsAttach'">
-            <startOffsets>
-              <option value="2681" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2892" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

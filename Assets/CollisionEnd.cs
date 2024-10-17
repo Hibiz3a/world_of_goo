@@ -5,14 +5,23 @@ using UnityEngine;
 
 public class CollisionEnd : MonoBehaviour
 {
+    [SerializeField] private string gooTag = "Goo";
+    private Level_Manger LevelManager;
 
-    
-    
-    private void OnCollisionEnter(Collision other)
+    private bool isGameOver = false;
+
+    private void Start()
     {
-        if (CompareTag("Goo"))
+        LevelManager = GetComponentInParent<Level_Manger>();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag(gooTag) && !isGameOver)
         {
-            transform.parent.GetComponent<Level_Manger>().EndLevelLoose();
+            isGameOver = true;
+            LevelManager.EndLevelLoose();
         }
     }
+    
 }

@@ -65,6 +65,22 @@ public class GooManager : MonoBehaviour
 
 
     private Vector3 MousePos;
+    
+    public static GooManager instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
@@ -114,19 +130,21 @@ public class GooManager : MonoBehaviour
         if (ElectricGooCountCurrent > 0 && _context.started)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            GameObject _electricGoo = Instantiate(ElecticGooGO, mousePos, Quaternion.Euler(0, 0, 0), gameObject.transform);
+            GameObject _electricGoo =
+                Instantiate(ElecticGooGO, mousePos, Quaternion.Euler(0, 0, 0), gameObject.transform);
             PlacedGoos.Add(_electricGoo);
             ElectricGooCountCurrent--;
             ElectricGoo.text = ElectricGooCountCurrent + "/" + ElectricGooCount;
         }
     }
 
-    public void ConstructionGooSpawn(InputAction.CallbackContext _context)
+    public void ConstructGooSpawn(InputAction.CallbackContext _context)
     {
         if (ConstructionGooCountCurrent > 0 && _context.started)
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            GameObject _constructionGoo = Instantiate(ConstructionGooGO, mousePos, Quaternion.Euler(0, 0, 0), gameObject.transform);
+            GameObject _constructionGoo =
+                Instantiate(ConstructionGooGO, mousePos, Quaternion.Euler(0, 0, 0), gameObject.transform);
             PlacedGoos.Add(_constructionGoo);
             ConstructionGooCountCurrent--;
             ConstructionGoo.text = ConstructionGooCountCurrent + "/" + ConstructionGooCount;

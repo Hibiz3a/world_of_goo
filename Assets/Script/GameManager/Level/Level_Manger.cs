@@ -6,29 +6,33 @@ using Random = UnityEngine.Random;
 
 public class Level_Manger : MonoBehaviour
 {
+    [Header("Level Type and Goo")]
     [SerializeField] private LevelType CurrentLevelType;
     [SerializeField] private GooType CurrentGooType;
 
-    [SerializeField] private GooManager GooManager;
+    [Header("GameObject")]
     [SerializeField] private GameObject StartGoo;
     [SerializeField] private GameObject EndGoo;
-
-    [SerializeField] private Vector3 FirstEncorStarGoo;
-    [SerializeField] private Vector3 SecondEncorStarGoo;
-    [SerializeField] private Vector3 FirstEncorEndGoo;
-    [SerializeField] private Vector3 SecondEncorEndGoo;
-
-    [SerializeField] private int AmountOfSartGoo = 2;
-    [SerializeField] private int baseObstacleCount = 3;
-
     [SerializeField] private GameObject PanelEndLevelWin;
     [SerializeField] private GameObject PanelEndLevelLoose;
     [SerializeField] private GameObject Canva;
     [SerializeField] private GameObject ObstaclePrefab;
 
+    [Header("Vector3")]
+    [SerializeField] private Vector3 FirstEncorStarGoo;
+    [SerializeField] private Vector3 SecondEncorStarGoo;
+    [SerializeField] private Vector3 FirstEncorEndGoo;
+    [SerializeField] private Vector3 SecondEncorEndGoo;
+
+    [Header("Int and Float")]
+    [SerializeField] private int AmountOfStartGoo = 2;
+    [SerializeField] private int baseObstacleCount = 3;
+    [SerializeField] private float minDistanceBetweenObjects = 2f;
+    
+    private GooManager GooManager;
     private List<GameObject> Goos = new List<GameObject>();
     private List<GameObject> Obstacles = new List<GameObject>();
-
+    private List<Vector3> usedPositions = new List<Vector3>();
 
     public GooType _CurrentGooType => CurrentGooType;
     public GooManager _GooManager => GooManager;
@@ -37,6 +41,7 @@ public class Level_Manger : MonoBehaviour
 
     private void Start()
     {
+        GooManager = GooManager.instance;
         LoadGooForLevelAndType(CurrentLevelType, CurrentGooType);
     }
 
@@ -52,72 +57,48 @@ public class Level_Manger : MonoBehaviour
         Debug.Log("Goo Type Set to: " + gooType);
     }
 
+    #region SpawnGoo & Obstacles
+
     private void SpawnStartGoo()
     {
         List<Vector3> _posGoo = new List<Vector3>();
-        for (int i = 0; i < AmountOfSartGoo; i++)
+        for (int i = 0; i < AmountOfStartGoo; i++)
         {
-            Vector3 posStartGoo = new Vector3(Random.Range(FirstEncorStarGoo.x, SecondEncorStarGoo.x),
-                Random.Range(FirstEncorStarGoo.y, SecondEncorStarGoo.y), 0);
+            Vector3 posStartGoo;
+
+            do
+            {
+                posStartGoo = new Vector3(Random.Range(FirstEncorStarGoo.x, SecondEncorStarGoo.x),
+                    Random.Range(FirstEncorStarGoo.y, SecondEncorStarGoo.y), 0);
+            } while (!IsPositionValid(posStartGoo, _posGoo));
+
             _posGoo.Add(posStartGoo);
+            usedPositions.Add(posStartGoo);
         }
 
-        if (Vector3.Distance(_posGoo[0], _posGoo[1]) >= 2)
+        for (int i = 0; i < _posGoo.Count; i++)
         {
-            for (int i = 0; i < _posGoo.Count; i++)
-            {
-                GameObject _startGoo =
-                    Instantiate(StartGoo, _posGoo[i], Quaternion.Euler(0, 0, 0), GooManager.transform);
-                Goos.Add(_startGoo);
-            }
+            GameObject _startGoo =
+                Instantiate(StartGoo, _posGoo[i], Quaternion.identity, GooManager.transform);
+            Goos.Add(_startGoo);
         }
-        else
-        {
-            SpawnStartGoo();
-        }
-    }
-
-    public void EndLevelWin()
-    {
-        for (int i = 0; i < Goos.Count; i++)
-        {
-            Destroy(Goos[i]);
-            Goos.RemoveAt(i);
-        }
-
-        Canva.transform.GetChild(0).gameObject.SetActive(false);
-        for (int i = 0; i < GooManager._PlacedGoos.Count; i++)
-        {
-            for (int j = 0; j < GooManager._PlacedGoos[i].transform.childCount; j++)
-            {
-                Destroy(GooManager._PlacedGoos[i].transform.GetChild(j).gameObject);
-            }
-            Destroy(GooManager._PlacedGoos[i]);
-            GooManager._PlacedGoos.RemoveAt(i);
-        }
-
-        for (int i = 0; i < Obstacles.Count; i++)
-        {
-            Destroy(Obstacles[i]);
-            Obstacles.RemoveAt(i);
-        }
-    }
-
-    public void EndLevelLoose()
-    {
-        EndLevelWin();
-        PanelEndLevelLoose.SetActive(true);
     }
 
     private void SpawnEndGoo()
     {
-        Vector3 posEndGoo = new Vector3(Random.Range(FirstEncorEndGoo.x, SecondEncorEndGoo.x),
-            Random.Range(FirstEncorEndGoo.y, SecondEncorEndGoo.y), 0);
+        Vector3 posEndGoo;
 
-        GameObject _endGoo = Instantiate(EndGoo, posEndGoo, Quaternion.Euler(0, 0, 0), gameObject.transform);
+        do
+        {
+            posEndGoo = new Vector3(Random.Range(FirstEncorEndGoo.x, SecondEncorEndGoo.x),
+                Random.Range(FirstEncorEndGoo.y, SecondEncorEndGoo.y), 0);
+        } while (!IsPositionValid(posEndGoo, usedPositions));
+
+        GameObject _endGoo = Instantiate(EndGoo, posEndGoo, Quaternion.identity, gameObject.transform);
 
         _endGoo.GetComponent<EndGooLevel>()._PanelEndLevel = PanelEndLevelWin;
         Goos.Add(_endGoo);
+        usedPositions.Add(posEndGoo);
     }
 
     private void SpawnObstacles(LevelType levelType)
@@ -139,12 +120,31 @@ public class Level_Manger : MonoBehaviour
 
         for (int i = 0; i < obstacleCount; i++)
         {
-            Vector3 obstaclePosition = new Vector3(Random.Range(FirstEncorStarGoo.x, SecondEncorEndGoo.x),
-                Random.Range(FirstEncorStarGoo.y, SecondEncorEndGoo.y), 0);
+            Vector3 obstaclePosition;
+
+            do
+            {
+                obstaclePosition = new Vector3(Random.Range(FirstEncorStarGoo.x, SecondEncorEndGoo.x),
+                    Random.Range(FirstEncorStarGoo.y, SecondEncorEndGoo.y), 0);
+            } while (!IsPositionValid(obstaclePosition, usedPositions));
 
             GameObject _obstacle = Instantiate(ObstaclePrefab, obstaclePosition, Quaternion.identity, this.transform);
             Obstacles.Add(_obstacle);
+            usedPositions.Add(obstaclePosition);
         }
+    }
+
+    private bool IsPositionValid(Vector3 position, List<Vector3> positions)
+    {
+        foreach (Vector3 existingPosition in positions)
+        {
+            if (Vector3.Distance(position, existingPosition) < minDistanceBetweenObjects)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private void AdjustEndPosition(LevelType levelType)
@@ -162,6 +162,8 @@ public class Level_Manger : MonoBehaviour
                 break;
         }
     }
+
+    #endregion
 
     public void LoadGooForLevelAndType(LevelType levelType, GooType gooType)
     {
@@ -199,6 +201,49 @@ public class Level_Manger : MonoBehaviour
                 break;
         }
     }
+
+    #region EndLevel Functions
+
+    public void EndLevelWin()
+    {
+        DestroyAllGooAndObstacles();
+        PanelEndLevelWin.SetActive(true);
+    }
+
+    public void EndLevelLoose()
+    {
+        DestroyAllGooAndObstacles();
+        PanelEndLevelLoose.SetActive(true);
+    }
+
+    private void DestroyAllGooAndObstacles()
+    {
+        for (int i = Goos.Count - 1; i >= 0; i--)
+        {
+            Destroy(Goos[i]);
+            Goos.RemoveAt(i);
+        }
+
+        Canva.transform.GetChild(0).gameObject.SetActive(false);
+
+        for (int i = GooManager._PlacedGoos.Count - 1; i >= 0; i--)
+        {
+            for (int j = GooManager._PlacedGoos[i].transform.childCount - 1; j >= 0; j--)
+            {
+                Destroy(GooManager._PlacedGoos[i].transform.GetChild(j).gameObject);
+            }
+            Destroy(GooManager._PlacedGoos[i]);
+            GooManager._PlacedGoos.RemoveAt(i);
+        }
+
+        for (int i = Obstacles.Count - 1; i >= 0; i--)
+        {
+            Destroy(Obstacles[i]);
+            Obstacles.RemoveAt(i);
+        }
+    }
+
+    #endregion
 
     public void Restart()
     {
