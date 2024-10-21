@@ -6,11 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Base_Game/Menu.unity
+    guid: c8d6f9fce02fe8a41ba286ab82b569c5
+  - enabled: 1
     path: Assets/Scenes/Base_Game/Base_Scene.unity
     guid: 03832b44988df9847b5c5dc86e9e4279
   - enabled: 1
-    path: Assets/Scenes/Level/Construction_Level_easy.unity
-    guid: 4de9b89a629657949b8d4884c3e831da
+    path: Assets/Scenes/Level/Construction_Level_Easy.unity
+    guid: 718f9a89371dcaf4688bd1f700f26368
   - enabled: 1
     path: Assets/Scenes/Level/Construction_Level_Medium.unity
     guid: cf2d196cadb24484abe3e0f68750eba1

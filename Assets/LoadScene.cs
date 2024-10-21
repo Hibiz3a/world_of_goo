@@ -8,6 +8,7 @@ public class LoadScene : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        transform.parent.transform.parent.gameObject.SetActive(false);
         LoadLevelScene(sceneIndex);  
     }
 

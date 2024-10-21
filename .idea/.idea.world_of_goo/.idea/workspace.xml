@@ -6,19 +6,23 @@
   <component name="ChangeListManager">
     <list default="true" id="ef89d893-6070-430b-b0c7-ce4fb3db81ae" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.world_of_goo/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.world_of_goo/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/CollisionEnd.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CollisionEnd.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GeneratorGoo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GeneratorGoo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/BaseGoo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/BaseGoo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/LoadScene.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LoadScene.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Ressources/Prefab/Goo/Goo 1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ressources/Prefab/Goo/Goo 1.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Ressources/Prefab/Goo/LineRenderer.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ressources/Prefab/Goo/LineRenderer.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Ressources/Prefab/Goo/Start Goo Variant.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Ressources/Prefab/Goo/Start Goo Variant.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Base_Game/Base_Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Base_Game/Base_Scene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Construction_Level.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Construction_Level.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Electric_Level.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Electric_Level.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Water_Level.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Water_Level.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level_Manager/Level_ManagerSetUp.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level_Manager/Level_ManagerSetUp.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Base_Game/Base_Scene2.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Base_Game/Base_Scene2.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Construction_Level_Easy.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level/Construction_Level_Easy.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Construction_Level_Hard.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level/Construction_Level_Hard.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Construction_Level_Medium.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level/Construction_Level_Medium.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Electric_Level_Easy.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level/Electric_Level_Easy.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Electric_Level_Hard.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level/Electric_Level_Hard.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Electric_Level_Medium.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level/Electric_Level_Medium.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Water_Level_Easy.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level/Water_Level_Easy.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Water_Level_Hard.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level/Water_Level_Hard.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level/Water_Level_Medium.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level/Water_Level_Medium.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/GameManager/GooManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/GameManager/GooManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/GameManager/Level/Level_Manger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/GameManager/Level/Level_Manger.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/Goo/Attachment/Attach_Goo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Goo/Attachment/Attach_Goo.cs" afterDir="false" />
@@ -37,6 +41,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/50e5acd061cd4a73b7fc8eecbf07e915176600/e7/03b14538/Component.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5a41d6b7189842eca409fd0b1c3e3dcf17bf78/7a/8bd2ddf8/Dictionary`2.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/d45553285c2f49d48808b14475028f9f957e00/02/db4af924/TagField.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/MenuButton.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/MoveCamera.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/Goo/Types/EndGooLevel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.animation@9.1.2/Runtime/SpriteSkinComposite.cs" root0="SKIP_HIGHLIGHTING" />
@@ -79,6 +84,14 @@
   }
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
+      <option name="EXE_PATH" value="$PROJECT_DIR$/../Build/BUild 5\world of goo.exe" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\rayna\Documents\Lahorde\Anne 2\Quete\Quete n°1\Build\Build 1" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <method v="2" />
+    </configuration>
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2022.3.47f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-projectPath &quot;C:\Users\rayna\Documents\Lahorde\Anne 2\Quete\Quete n°1\world_of_goo&quot; -debugCodeOptimization" />
@@ -105,10 +118,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="18708">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="18708" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -133,7 +146,8 @@
       <workItem from="1729165655072" duration="3453000" />
       <workItem from="1729169151366" duration="9382000" />
       <workItem from="1729185675910" duration="7324000" />
-      <workItem from="1729194931034" duration="509000" />
+      <workItem from="1729194931034" duration="852000" />
+      <workItem from="1729239486927" duration="15034000" />
     </task>
     <servers />
   </component>

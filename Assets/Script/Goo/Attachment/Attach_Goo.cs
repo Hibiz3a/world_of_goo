@@ -6,32 +6,30 @@ public class Attach_Goo : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private int RadiusDetection;
     [SerializeField] private SpringJoint2D[] springJoints;
-    [SerializeField] private GameObject LinePreafab;
+    [SerializeField] private GameObject LinePrefab;
     [SerializeField] private bool isGooStart;
-
-
     [SerializeField] private bool isGooEnd;
     [SerializeField] private float connectionRange = 5f;
-    private List<GameObject> LinePreafabList = new List<GameObject>();
+    [SerializeField] private GooType GooType;
+    private List<GameObject> LinePrefabList = new List<GameObject>();
     private List<GameObject> RbConnected = new List<GameObject>();
+    private Rigidbody2D rb2d;
+    private int JointCount = 0;
 
 
-
+    public static Attach_Goo selectedGoo1;
     public bool _IsGooStart => isGooStart;
     public bool _IsGooEnd => isGooEnd;
-    public List<GameObject> _LinePreafabList => LinePreafabList;
+    public List<GameObject> _LinePrefabList => LinePrefabList;
     public List<GameObject> _RbConnected => RbConnected;
+    public int _JointCount => JointCount;
 
-    [SerializeField] private GooType GooType;
 
     public GooType _GooType
     {
         get { return GooType; }
     }
 
-    public static Attach_Goo selectedGoo1;
-    private Rigidbody2D rb2d;
-    private int JointCount = 0;
 
     private void Start()
     {
@@ -41,7 +39,8 @@ public class Attach_Goo : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("click attach Goo");
+        Debug.Log("Click attach Goo");
+
         if (CompareTag("Goo"))
         {
             if (selectedGoo1 == null)
@@ -67,7 +66,6 @@ public class Attach_Goo : MonoBehaviour, IPointerClickHandler
 
     private void CreateSpringJoint(Attach_Goo goo1, Attach_Goo goo2)
     {
-        // Block the connection between two Start Goo objects
         if (goo1.isGooStart && goo2.isGooStart)
         {
             Debug.Log("Cannot connect two Goo Starts together.");
@@ -76,15 +74,12 @@ public class Attach_Goo : MonoBehaviour, IPointerClickHandler
 
         float distance = Vector2.Distance(goo1.transform.position, goo2.transform.position);
 
-        // Check if the selected Goo is in range
         if (distance <= connectionRange)
         {
             SpringJoint2D availableJoint = null;
 
-            // EndGoo creates a joint automatically with the selected Goo
             if (goo1.isGooEnd || goo2.isGooEnd)
             {
-                // If none of the Goos is an EndGoo, cancel the initiation
                 if (!goo1.isGooEnd && !goo2.isGooEnd)
                 {
                     Debug.Log("Connection must be initiated by a Goo End.");
@@ -110,7 +105,6 @@ public class Attach_Goo : MonoBehaviour, IPointerClickHandler
                 }
             }
 
-            // If Goo1 is a Start or End Goo, connect it to a regular Goo
             if (goo1.isGooStart || goo1.isGooEnd)
             {
                 foreach (var joint in goo2.springJoints)
@@ -131,7 +125,6 @@ public class Attach_Goo : MonoBehaviour, IPointerClickHandler
                     goo1.JointCount++;
                 }
             }
-            // Same logic but in reverse order
             else if (goo2.isGooStart || goo2.isGooEnd)
             {
                 foreach (var joint in goo1.springJoints)
@@ -155,7 +148,6 @@ public class Attach_Goo : MonoBehaviour, IPointerClickHandler
             }
             else
             {
-                // Both Goo1 and Goo2 are not Start or End Goos
                 foreach (var joint in goo1.springJoints)
                 {
                     if (joint.connectedBody == null)
@@ -180,69 +172,55 @@ public class Attach_Goo : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            Debug.Log("Goo's are too far from each other.");
+            Debug.Log("Goos are too far from each other.");
         }
     }
 
     private void CreateLineRenderer(Attach_Goo goo1, Attach_Goo goo2, SpringJoint2D springJoint)
     {
-        // Create a new GameObject with the LineRenderer component
-        GameObject _line = Instantiate(LinePreafab, goo1.transform.position, Quaternion.identity, goo1.transform);
+        GameObject _line = Instantiate(LinePrefab, goo1.transform.position, Quaternion.identity, goo1.transform);
         LineRenderer _lineRenderer = _line.GetComponent<LineRenderer>();
 
-        // Set positions of Goo1 and Goo2 for the start and end of the LineRenderer
         _lineRenderer.SetPosition(0, goo1.transform.position);
         _lineRenderer.SetPosition(1, goo2.transform.position);
 
-        // Associate the correct SpringJoint with the LineManager
         LineManager lineManager = _line.GetComponent<LineManager>();
         lineManager.SetSpringJointToWatch(springJoint);
 
-        // Add the connected Rigidbody and LineRenderer to the lists
         RbConnected.Add(goo2.gameObject);
-        LinePreafabList.Add(_line);
+        LinePrefabList.Add(_line);
     }
-
 
     private void Update()
     {
-        if (gameObject.activeSelf)
+        for (int i = 0; i < LinePrefabList.Count; i++)
         {
-            // Update the positions of the LineRenderer.
-            for (int i = 0; i < LinePreafabList.Count; i++)
+            if (LinePrefabList[i] != null)
             {
-                if (LinePreafabList[i] != null)
-                {
-                    LinePreafabList[i].GetComponent<LineRenderer>()
-                        .SetPosition(0, LinePreafabList[i].transform.parent.position);
-                    LinePreafabList[i].GetComponent<LineRenderer>().SetPosition(1, RbConnected[i].transform.position);
-                }
+                LinePrefabList[i].GetComponent<LineRenderer>()
+                    .SetPosition(0, LinePrefabList[i].transform.parent.position);
+                LinePrefabList[i].GetComponent<LineRenderer>().SetPosition(1, RbConnected[i].transform.position);
             }
+        }
 
-            // Detect if a SpringJoint2D is disconnected or disabled and destroy the corresponding LineRenderer.
-            for (int i = 0; i < springJoints.Length; i++)
+        for (int i = 0; i < springJoints.Length; i++)
+        {
+            if (!springJoints[i].enabled || springJoints[i].connectedBody == null)
             {
-                // Check if the SpringJoint is disabled or disconnected
-                if (!springJoints[i].enabled || springJoints[i].connectedBody == null)
+                if (!isGooStart && !isGooEnd)
                 {
-                    // Only destroy LineRenderer if neither Goo is a Start or End Goo
-                    if (!isGooStart && !isGooEnd)
+                    int index = RbConnected.FindIndex(rb => rb == springJoints[i].connectedBody?.gameObject);
+
+                    if (index >= 0 && LinePrefabList[index] != null)
                     {
-                        // Find the index of the connected GameObject and destroy the corresponding LineRenderer
-                        int index = RbConnected.FindIndex(rb => rb == springJoints[i].connectedBody?.gameObject);
-
-                        if (index >= 0 && LinePreafabList[index] != null)
-                        {
-                            Destroy(LinePreafabList[index]); // Destroy the LineRenderer
-                            LinePreafabList.RemoveAt(index); // Remove from the list
-                            RbConnected.RemoveAt(index);    // Remove from the connected Rigidbody list
-                        }
-
-                        Debug.Log("SpringJoint disconnected or disabled, LineRenderer destroyed.");
+                        Destroy(LinePrefabList[index]);
+                        LinePrefabList.RemoveAt(index);
+                        RbConnected.RemoveAt(index);
                     }
+
+                    Debug.Log("SpringJoint disconnected or disabled, LineRenderer destroyed.");
                 }
             }
         }
     }
-
 }

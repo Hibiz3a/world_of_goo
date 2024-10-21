@@ -6,29 +6,31 @@ using Random = UnityEngine.Random;
 
 public class Level_Manger : MonoBehaviour
 {
-    [Header("Level Type and Goo")]
-    [SerializeField] private LevelType CurrentLevelType;
+    [Header("Level Type and Goo")] [SerializeField]
+    private LevelType CurrentLevelType;
+
     [SerializeField] private GooType CurrentGooType;
 
-    [Header("GameObject")]
-    [SerializeField] private GameObject StartGoo;
+    [Header("GameObject")] [SerializeField]
+    private GameObject StartGoo;
+
     [SerializeField] private GameObject EndGoo;
     [SerializeField] private GameObject PanelEndLevelWin;
     [SerializeField] private GameObject PanelEndLevelLoose;
     [SerializeField] private GameObject Canva;
     [SerializeField] private GameObject ObstaclePrefab;
 
-    [Header("Vector3")]
-    [SerializeField] private Vector3 FirstEncorStarGoo;
+    [Header("Vector3")] [SerializeField] private Vector3 FirstEncorStarGoo;
     [SerializeField] private Vector3 SecondEncorStarGoo;
     [SerializeField] private Vector3 FirstEncorEndGoo;
     [SerializeField] private Vector3 SecondEncorEndGoo;
 
-    [Header("Int and Float")]
-    [SerializeField] private int AmountOfStartGoo = 2;
+    [Header("Int and Float")] [SerializeField]
+    private int AmountOfStartGoo = 2;
+
     [SerializeField] private int baseObstacleCount = 3;
     [SerializeField] private float minDistanceBetweenObjects = 2f;
-    
+
     private GooManager GooManager;
     private List<GameObject> Goos = new List<GameObject>();
     private List<GameObject> Obstacles = new List<GameObject>();
@@ -42,6 +44,10 @@ public class Level_Manger : MonoBehaviour
     private void Start()
     {
         GooManager = GooManager.instance;
+        PanelEndLevelWin = GooManager.instance._PanelEndLevelWin;
+        PanelEndLevelLoose = GooManager.instance._PanelEndLevelLoose;
+        Canva = GooManager.instance._Canva;
+
         LoadGooForLevelAndType(CurrentLevelType, CurrentGooType);
     }
 
@@ -96,7 +102,6 @@ public class Level_Manger : MonoBehaviour
 
         GameObject _endGoo = Instantiate(EndGoo, posEndGoo, Quaternion.identity, gameObject.transform);
 
-        _endGoo.GetComponent<EndGooLevel>()._PanelEndLevel = PanelEndLevelWin;
         Goos.Add(_endGoo);
         usedPositions.Add(posEndGoo);
     }
@@ -212,6 +217,11 @@ public class Level_Manger : MonoBehaviour
 
     public void EndLevelLoose()
     {
+        GooManager._Tips.SetActive(false);
+        for (int i = 0; i < GooManager._Tips.transform.childCount; i++)
+        {
+            GooManager._Tips.transform.GetChild(i).gameObject.SetActive(false);
+        }
         DestroyAllGooAndObstacles();
         PanelEndLevelLoose.SetActive(true);
     }
@@ -232,6 +242,7 @@ public class Level_Manger : MonoBehaviour
             {
                 Destroy(GooManager._PlacedGoos[i].transform.GetChild(j).gameObject);
             }
+
             Destroy(GooManager._PlacedGoos[i]);
             GooManager._PlacedGoos.RemoveAt(i);
         }

@@ -3,6 +3,7 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GooManager : MonoBehaviour
 {
@@ -16,6 +17,21 @@ public class GooManager : MonoBehaviour
     [SerializeField] private GameObject WaterGooGO;
     [SerializeField] private GameObject ElecticGooGO;
     [SerializeField] private GameObject ConstructionGooGO;
+    [SerializeField] private GameObject PanelEndLevelWin;
+    [SerializeField] private GameObject PanelEndLevelLoose;
+    [SerializeField] private GameObject ChooseLevelPanel;
+
+    public GameObject _ChooseLevelPanel
+    {
+        get => ChooseLevelPanel;
+        set => ChooseLevelPanel = value;
+    }
+
+    [SerializeField] private GameObject GooCountPanel;
+    [SerializeField] private GameObject Tips;
+
+
+    [SerializeField] private GameObject Canva;
 
     [SerializeField] private TextMeshProUGUI ElectricGoo;
     [SerializeField] private TextMeshProUGUI WaterGoo;
@@ -23,6 +39,33 @@ public class GooManager : MonoBehaviour
 
 
     private List<GameObject> PlacedGoos = new List<GameObject>();
+
+    #region Getter & Setter
+
+    public GameObject _Tips
+    {
+        get => Tips;
+        set => Tips = value;
+    }
+
+    public GameObject _PanelEndLevelWin
+    {
+        get => PanelEndLevelWin;
+        set => PanelEndLevelWin = value;
+    }
+
+    public GameObject _PanelEndLevelLoose
+    {
+        get => PanelEndLevelLoose;
+        set => PanelEndLevelLoose = value;
+    }
+
+    public GameObject _Canva
+    {
+        get => Canva;
+        set => Canva = value;
+    }
+
 
     public List<GameObject> _PlacedGoos
     {
@@ -63,9 +106,10 @@ public class GooManager : MonoBehaviour
         get { return ConstructionGooCountCurrent; }
     }
 
+    #endregion
 
     private Vector3 MousePos;
-    
+
     public static GooManager instance;
 
     private void Awake()
@@ -85,6 +129,11 @@ public class GooManager : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+
+
+        ElectricGooCountCurrent = ElectricGooCount;
+        WaterGooCountCurrent = WaterGooCount;
+        ConstructionGooCountCurrent = ConstructionGooCount;
         ElectricGoo.text = ElectricGooCountCurrent + "/" + ElectricGooCount;
         ConstructionGoo.text = ConstructionGooCountCurrent + "/" + ConstructionGooCount;
         WaterGoo.text = WaterGooCountCurrent + "/" + WaterGooCount;
@@ -93,6 +142,8 @@ public class GooManager : MonoBehaviour
 
     public void ConstructionLevelLaunch()
     {
+        Tips.SetActive(true);
+        Tips.transform.GetChild(0).gameObject.SetActive(true);
         ConstructionGooCountCurrent = ConstructionGooCount;
         WaterGooCountCurrent = 0;
         ElectricGooCountCurrent = 0;
@@ -100,6 +151,8 @@ public class GooManager : MonoBehaviour
 
     public void WaterLevelLaunch()
     {
+        Tips.SetActive(true);
+        Tips.transform.GetChild(1).gameObject.SetActive(true);
         ConstructionGooCountCurrent = 0;
         WaterGooCountCurrent = WaterGooCount;
         ElectricGooCountCurrent = 0;
@@ -107,6 +160,8 @@ public class GooManager : MonoBehaviour
 
     public void ElectricGooLaunch()
     {
+        Tips.SetActive(true);
+        Tips.transform.GetChild(2).gameObject.SetActive(true);
         ConstructionGooCountCurrent = 0;
         WaterGooCountCurrent = 0;
         ElectricGooCountCurrent = ElectricGooCount;
@@ -149,5 +204,26 @@ public class GooManager : MonoBehaviour
             ConstructionGooCountCurrent--;
             ConstructionGoo.text = ConstructionGooCountCurrent + "/" + ConstructionGooCount;
         }
+    }
+
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene(1);
+        PanelEndLevelLoose.SetActive(false);
+        PanelEndLevelWin.SetActive(false);
+        GooCountPanel.SetActive(true);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+    
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GooCountPanel.SetActive(true);
+        PanelEndLevelWin.SetActive(false);
+        PanelEndLevelLoose.SetActive(false);
     }
 }

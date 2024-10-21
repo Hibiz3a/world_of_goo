@@ -130,7 +130,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RadiusDetection: 5
   springJoints: []
-  LinePreafab: {fileID: 3537279874731344451, guid: 40868b1145319aa4fa0728b0b35a937f, type: 3}
+  LinePrefab: {fileID: 3537279874731344451, guid: 40868b1145319aa4fa0728b0b35a937f, type: 3}
+  LinePreviewPrefab: {fileID: 3537279874731344451, guid: 6cc47c0914f93154a87dcd8d1eabadd7, type: 3}
+  ConnectedMaterial: {fileID: 2100000, guid: 6a7c7b77c093f7649856b4b283b4aa20, type: 2}
   isGooStart: 0
   isGooEnd: 0
   connectionRange: 5

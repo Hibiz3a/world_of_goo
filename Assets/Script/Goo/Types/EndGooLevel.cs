@@ -8,17 +8,14 @@ public class EndGooLevel : MonoBehaviour
     [SerializeField] private GooType GooLevelType;
     private GameObject PanelEndLevel;
 
-    public GameObject _PanelEndLevel
-    {
-        get { return PanelEndLevel; }
-        set { PanelEndLevel = value; }
-    }
+
 
 
     private void Start()
     {
         SpringJoint = gameObject.GetComponent<SpringJoint2D>();
         levelManager = gameObject.transform.parent.GetComponent<Level_Manger>();
+        PanelEndLevel = levelManager._GooManager._PanelEndLevelWin;
         GooLevelType = levelManager._CurrentGooType;
     }
 
@@ -35,6 +32,7 @@ public class EndGooLevel : MonoBehaviour
     {
         if (SpringJoint.connectedBody.gameObject.GetComponent<Attach_Goo>()._GooType == GooLevelType)
         {
+            levelManager.EndLevelWin();
             switch (GooLevelType)
             {
                 case GooType.Construction:
@@ -42,7 +40,6 @@ public class EndGooLevel : MonoBehaviour
                         levelManager._GooManager._ConstructionGooCount,
                         levelManager._GooManager._CurrentConstructionGooCount, levelManager._CurrentLevelType);
                     levelManager._GooManager._ConstructionGooCount += _earnedGooConstruction;
-                    PanelEndLevel.GetComponent<CanvasGroup>().alpha = 1;
                     PanelEndLevel.GetComponent<EndLevelPanel>()._FirstGain.gameObject.SetActive(true);
                     PanelEndLevel.GetComponent<EndLevelPanel>()._FirstGain.text = "You have earned " +
                         _earnedGooConstruction + " construction Goo.";
